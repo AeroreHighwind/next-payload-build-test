@@ -1,0 +1,726 @@
+body { font-family: system-ui, sans-serif; margin: 0; line-height: 1.6; }
+main { max-width: 860px; margin: 0 auto; padding: 2rem 1rem; }
+img, video { max-width: 100%; height: auto; }
+.columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+hr { border: 0; border-top: 1px solid #8884; margin: 1.5rem 0; }
+figure { margin: 1.5rem 0; }
+blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 3px solid #8886; }
+pre { overflow-x: auto; padding: 1rem; background: #8881; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; }
+th, td { border: 1px solid #8884; padding: .4rem .7rem; }
+ul[data-check] { list-style: none; padding-left: 0; }
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --bg: #11110f;
+  --bg-dark: #0a0a09;
+  --bg-light: #191916;
+
+  --surface: #1d1c18;
+  --surface-hover: #25241f;
+
+  --text: #d8d2bd;
+  --text-bright: #eee9d8;
+  --text-muted: #8f8b7d;
+  --text-dark: #555248;
+
+  --accent: #b8ad8a;
+  --accent-bright: #d8cda8;
+  --accent-dark: #756e58;
+
+  --border: rgba(184, 173, 138, 0.28);
+  --border-strong: rgba(184, 173, 138, 0.55);
+
+  --danger: #9b5148;
+
+  --font-ui: 'Share Tech Mono', monospace;
+  --font-body: 'Libre Baskerville', Georgia, serif;
+
+  --content-width: 1200px;
+
+  color-scheme: dark;
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-dark);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      rgba(17, 17, 15, 0.96),
+      rgba(17, 17, 15, 0.96)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.012) 4px
+    );
+
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  color: var(--text-bright);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+p {
+  margin-top: 0;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg-dark);
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.container {
+  width: min(
+    calc(100% - 3rem),
+    var(--content-width)
+  );
+
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  padding: 6rem 0;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* =========================================================
+   NIER-STYLE UI FRAME
+   ========================================================= */
+
+.nier-frame {
+  position: relative;
+  border: 1px solid var(--border);
+  background: rgba(29, 28, 24, 0.82);
+}
+
+.nier-frame::before,
+.nier-frame::after {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  content: '';
+  pointer-events: none;
+}
+
+.nier-frame::before {
+  top: -1px;
+  left: -1px;
+
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+}
+
+.nier-frame::after {
+  right: -1px;
+  bottom: -1px;
+
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.nier-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  border-bottom: 1px solid var(--border);
+
+  background: rgba(10, 10, 9, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.nier-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 64px;
+}
+
+.logo {
+  color: var(--text-bright);
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav a {
+  position: relative;
+
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  transition:
+    color 150ms ease,
+    opacity 150ms ease;
+}
+
+.nav a:target {
+  color: var(--text-bright);
+}
+
+.nav a:hover,
+.nav a.active {
+  color: var(--text-bright);
+}
+
+.nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: -7px;
+  left: 0;
+
+  height: 1px;
+
+  background: var(--accent);
+
+  content: '';
+
+  transform: scaleX(0);
+  transform-origin: right;
+
+  transition: transform 180ms ease;
+}
+
+.nav a:hover::after,
+.nav a.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+  padding: 0.6rem 1.5rem;
+
+  border: 1px solid var(--border-strong);
+  background: transparent;
+
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg-dark);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg-dark);
+}
+
+.btn-primary:hover {
+  background: var(--accent-bright);
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+  position: relative;
+
+  padding: 2rem;
+
+  border: 1px solid var(--border);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184, 173, 138, 0.035),
+      transparent 45%
+    ),
+    var(--surface);
+
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+
+  color: var(--text-bright);
+
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-meta {
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+/* =========================================================
+   TERMINAL / SYSTEM TEXT
+   ========================================================= */
+
+.system-text {
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.system-text::before {
+  margin-right: 0.5rem;
+  content: '>';
+}
+
+.system-line {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  color: var(--text-muted);
+
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.system-line::after {
+  flex: 1;
+
+  height: 1px;
+
+  background: var(--border);
+
+  content: '';
+}
+
+/* =========================================================
+   DIVIDERS
+   ========================================================= */
+
+.divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 2rem 0;
+
+  background: var(--border);
+}
+
+.divider-short {
+  width: 80px;
+  height: 2px;
+
+  margin: 1.5rem 0;
+
+  background: var(--accent);
+}
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+
+label {
+  display: block;
+
+  margin-bottom: 0.5rem;
+
+  color: var(--text-muted);
+
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+
+  padding: 0.8rem 1rem;
+
+  border: 1px solid var(--border);
+  outline: none;
+
+  background: var(--bg-light);
+  color: var(--text);
+
+  transition:
+    border-color 150ms ease,
+    background 150ms ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+}
+
+th,
+td {
+  padding: 0.9rem 1rem;
+
+  border-bottom: 1px solid var(--border);
+
+  text-align: left;
+}
+
+th {
+  color: var(--accent);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+tr:hover td {
+  background: rgba(184, 173, 138, 0.035);
+}
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status::before {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+  content: '';
+}
+
+.status-online {
+  color: var(--accent);
+}
+
+.status-warning {
+  color: #b38d55;
+}
+
+.status-error {
+  color: var(--danger);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 80vh;
+
+  overflow: hidden;
+}
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10, 10, 9, 0.98) 0%,
+      rgba(10, 10, 9, 0.82) 55%,
+      rgba(10, 10, 9, 0.98) 100%
+    );
+
+  content: '';
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   DECORATIVE GRID
+   ========================================================= */
+
+.grid-background {
+  background-image:
+    linear-gradient(
+      rgba(184, 173, 138, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(184, 173, 138, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 40px 40px;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-dark);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* =========================================================
+   UTILITY CLASSES
+   ========================================================= */
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.mono {
+  font-family: var(--font-ui);
+}
+
+.serif {
+  font-family: var(--font-body);
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .container {
+    width: min(
+      calc(100% - 2rem),
+      var(--content-width)
+    );
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .nier-header-inner {
+    min-height: 56px;
+  }
+
+  .nav {
+    gap: 1rem;
+  }
+
+  .nav a {
+    font-size: 0.7rem;
+  }
+
+  .hero {
+    min-height: 70vh;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav {
+    display: none;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
